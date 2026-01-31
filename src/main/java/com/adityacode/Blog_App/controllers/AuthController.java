@@ -1,10 +1,9 @@
 package com.adityacode.Blog_App.controllers;
-
-
 import com.adityacode.Blog_App.domain.dtos.AuthResponse;
 import com.adityacode.Blog_App.domain.dtos.LoginRequest;
 import com.adityacode.Blog_App.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/api/v1/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
 
     private final AuthenticationService authenticationService;
@@ -34,6 +34,7 @@ public class AuthController {
                 .token(token)
                 .expires_in(86400)
                 .build();
+
 
         return  ResponseEntity.ok(authResponse);
     }
