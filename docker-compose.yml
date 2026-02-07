@@ -16,34 +16,9 @@ services:
       - APP_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - APP_ADMIN_NAME=${ADMIN_NAME}
       - SPRING_PROFILES_ACTIVE=prod
-    depends_on:
-      db:
-        condition: service_healthy
     networks:
       - blog-network
-
-  db:
-    image: postgres:15-alpine
-    container_name: blog-db
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-    ports:
-      - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    networks:
-      - blog-network
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
 networks:
   blog-network:
     driver: bridge
-
-volumes:
-  db_data:
