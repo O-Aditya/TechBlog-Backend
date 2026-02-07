@@ -1,6 +1,5 @@
 package com.adityacode.Blog_App.domain.dtos;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,5 +15,5 @@ import java.util.UUID;
 public class TagResponse {
     private UUID id;
     private String name;
-    private Integer postcount;
+    private Integer postCount;
 }

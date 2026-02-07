@@ -1,6 +1,7 @@
 package com.adityacode.Blog_App.controllers;
 
 import com.adityacode.Blog_App.domain.dtos.ApiErrorResponse;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,5 +52,16 @@ public class GlobalExceptionHandler {
                 .Message("Bad Credentials")
                 .build();
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    }
+
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleEntityNotFoundException(EntityNotFoundException e) {
+        log.warn("Not Found: {}", e.getMessage());
+        ApiErrorResponse error = ApiErrorResponse.builder()
+                .StatusCode(HttpStatus.NOT_FOUND.value())
+                .Message("Bad Credentials")
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 }

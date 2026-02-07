@@ -1,4 +1,5 @@
 package com.adityacode.Blog_App.controllers;
+
 import com.adityacode.Blog_App.domain.dtos.AuthResponse;
 import com.adityacode.Blog_App.domain.dtos.LoginRequest;
 import com.adityacode.Blog_App.services.AuthenticationService;
@@ -19,15 +20,14 @@ public class AuthController {
 
     private final AuthenticationService authenticationService;
 
-
-    @PostMapping()
+    @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
-        //T0 Validate User
+        // T0 Validate User
         UserDetails user = authenticationService
                 .authenticate(
                         loginRequest.getEmail(),
                         loginRequest.getPassword());
-        //TO generate JWT Token
+        // TO generate JWT Token
         String token = authenticationService.generateToken(user);
 
         AuthResponse authResponse = AuthResponse.builder()
@@ -35,7 +35,6 @@ public class AuthController {
                 .expires_in(86400)
                 .build();
 
-
-        return  ResponseEntity.ok(authResponse);
+        return ResponseEntity.ok(authResponse);
     }
 }

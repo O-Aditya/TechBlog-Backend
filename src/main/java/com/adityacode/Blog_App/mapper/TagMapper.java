@@ -1,6 +1,5 @@
 package com.adityacode.Blog_App.mapper;
 
-
 import com.adityacode.Blog_App.domain.PostStatus;
 import com.adityacode.Blog_App.domain.dtos.TagResponse;
 import com.adityacode.Blog_App.domain.entities.Post;
@@ -16,19 +15,17 @@ import java.util.Set;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface TagMapper {
 
-
-    @Mapping(target = "postcount" , qualifiedByName = "calculatePostCount" , source = "posts"
-    )
+    @Mapping(target = "postCount", source = "posts", qualifiedByName = "calculatePostCount")
     TagResponse toTagResponse(Tag tag);
 
     @Named("calculatePostCount")
-    default Integer CalculatePostCount(Set<Post> posts){
-     if(posts.isEmpty()){
-         return 0;
-     }
-    return (int)posts.stream()
-             .filter(post -> PostStatus.PUBLISHED.equals(post.getStatus()))
-             .count();
+    default Integer calculatePostCount(Set<Post> posts) {
+        if (posts == null || posts.isEmpty()) {
+            return 0;
+        }
+        return (int) posts.stream()
+                .filter(post -> PostStatus.PUBLISHED.equals(post.getStatus()))
+                .count();
     }
 
 }
